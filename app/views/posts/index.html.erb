@@ -1,31 +1,28 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Posts</h1>
-<div>
-  <table>
-    <thead>
-      <tr>
-        <th>Content</th>
-        <th>Title</th>
-        <th>Image</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
+<% if user_signed_in? %>
 
-    <tbody>
-      <% @posts.each do |post| %>
-        <tr>
-          <td><%= post.content %></td>
-          <td><%= post.title %></td>
-          <td><%= post.image %></td>
-          <td><%= link_to 'Show', post %></td>
-          <td><%= link_to 'Edit', edit_post_path(post) %></td>
-          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-<br>
+  <% if @posts.any? %>
+    <h1>Wszystkie posty<h1>
+  <% else %>
+    <h2>Brak postów do wyświetlenia</h2>
+  <% end %>
 
-<%= link_to 'New Post', new_post_path %>
+  <% @posts.each do |post| %>
+    <h3>
+      <%= image_tag post.image.url, class: "img-thumbnail", width: 100 %>
+      <%= post.title %>
+    </h3>
+    <div>
+      <%= truncate(raw post.content) %>
+      <%= link_to "czytaj dalej", post %>
+    </div>
+    <% if is_admin %>
+      <%= link_to "Edytuj", edit_post_url(post) %>
+      <%= link_to "Usuń", post, method: :delete, data: { confirm: "Usunąć wpis?" } %>
+    <% end %>
+    <hr />
+  <% end %>
+<% else %>
+  Zaloguj się aby przeglądać posty
+<% end %>

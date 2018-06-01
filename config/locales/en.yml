@@ -31,3 +31,12 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    models:
+      post: "Wpis"
+    attributes:
+      post:
+        title: "Tytuł"
+        content: "Treść"
+        image: "Obrazek"
+      # will translate User attribute "login" as "Handle"

@@ -15,6 +15,46 @@
 
   <body>
     <div class="container">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <% if main_setting %>
+          <%= image_tag main_setting.image.url, class: 'img-thumbnail', size: "150x30" %>
+        <% else %>
+          Aby ustawić logo wejdź w ustawienia
+        <% end %>
+        <%= link_to "Damian Olejnik", root_url, class: "navbar-brand" %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <%= link_to "Home", root_url, class: "nav-link" %>
+            </li>
+            <% if is_admin %>
+              <li class="nav-item active">
+                <%= link_to "Dodaj wpis", new_post_url, class: "nav-link" %>
+              </li>
+            <% end %>
+          </ul>
+          <div class="pull-right">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-cog"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <%= link_to "Ustawienia", setting_url_for_layout, class: 'dropdown-item' %>
+                  <%= link_to("Zaloguj", new_user_session_url, class: 'dropdown-item') unless user_signed_in? %>
+                  <%= link_to("Wyloguj", destroy_user_session_path, method: :delete, class: 'dropdown-item') if user_signed_in? %>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
       <%= yield %>
     </div>
   </body>
